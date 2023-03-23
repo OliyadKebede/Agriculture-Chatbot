@@ -1,0 +1,123 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- lookup: element
+  examples: |
+    - Nitrogen
+    - Hydrogen
+    - Helium	
+    - Lithium	
+    - Beryllium	
+    - Boron	
+    - Carbon	
+    - Nitrogen	
+    - Oxygen	
+    - Fluorine	
+    - Neon		
+    - Sodium	
+    - Magnesium	
+    - Aluminium	
+    - Silicon		
+    - Phosphorus
+    - Sulfur	
+    - Chlorine	
+    - Argon	
+    - Potassium	
+    - Calcium	
+    - Scandium		
+    - Titanium	
+    - Vanadium	
+    - Chromium
+    - Manganese
+    - Iron		
+    - Cobalt
+    - Nickel	
+    - Copper	
+    - Zinc
+    - Gallium	
+    - Germanium		
+    - Arsenic	
+    - Selenium	
+    - Bromine		
+    - Krypton		
+    - Rubidium	
+    - Strontium	
+    - Yttrium		
+    - Zirconium	
+    - Niobium
+    - Molybdenum		
+    - Technetium	
+    
+- lookup: crop
+  examples: |
+    - Alfalfa
+    - Buckwheat
+    - Cereals
+    - Barley
+    - Wheat
+    - Oats
+    - Canole
+    - Corn
+    - Flax
+    - Grasses
+    - Peas
+    - Beans
+    - Soybeans
+   
+- intent: crop_search
+  examples: |
+    - i want to a get a recommende crop type from recorded sample nutrient level
+    - can you tell me the amount of [nitrogent](element) and [calcium](element) nutrients level for [falx](crop)
+    - i am searching for a crop plants
+    - i'm looking for a suffcience nutrients level for [corn](crop)
+    - show me nutrients level for [soybeans](crop)
+    - show me a [nitrogen](element) nutrient level for [soybeans](crop)
+    - please let me know a the required amount of nutrients level for [barley](crop) and [cereal](crop)
+    - i would really like to know
+    - how much [magnesium](element) level is required for [Grasses](crop)
+    - could you please check crop nutrient level.
+  
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
