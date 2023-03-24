@@ -33,9 +33,9 @@ settings.configure(
         },
     },
 ],
-    ALLOWED_HOSTS = ['10.0.3.2','192.168.43.127','localhost', ],
+    ALLOWED_HOSTS = [*],
     DEBUG=True,
-    SECRET_KEY = 'django-insecure-*1ux8*cpx09qe14ot+35b=+l9wkl-o23r4yfwf#@m%opguxc)n',
+    SECRET_KEY = 'yoursecretkey',
    
 
     DATABASES = {
@@ -65,7 +65,7 @@ from django.urls import path
 from chatbot import ChatBot
 from django.contrib import admin
 
-# Create your views here.
+# views here.
 class ChatView(APIView):
   parser_classes = (parsers.JSONParser,)
 
@@ -73,9 +73,7 @@ class ChatView(APIView):
     print("result :",request.data)
     try:
         msg = request.data["msg"]
-        print("msg :",msg)
         res = ChatBot.getBot().response(msg)
-        print("res:",res)
         time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         return JsonResponse({
 		    "status":"success",
@@ -86,7 +84,9 @@ class ChatView(APIView):
         })
     except Exception as e:
          return JsonResponse({"status":"success","response":"Sorry I am not trained to do that yet..."})
-    
+
+
+#url here
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', ChatView.as_view(),name="chatbot"),

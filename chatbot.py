@@ -1,13 +1,12 @@
 import django
 django.setup()
+
+
 import json
 import requests
 from nutrient.models import Crop
 import random
 from string import Template
-from rasa.core.agent import Agent
-import traceback
-from path import getModelPath
 
 
 class ChatBot(object):
@@ -17,7 +16,6 @@ class ChatBot(object):
             "Hey! How are you?",
             "Fine, thanks.",
             "Great! How are you doing?",
-            "Oh gosh, all kinds of stuff !",
             "Very well, thanks.",
         ),
 
@@ -50,10 +48,17 @@ class ChatBot(object):
         
             
         ),
+         "Suggestion": (
+            "I suggest that,",
+            "I recommend that",
+            "Let's try this",       
+            
+        ),
         
         }
 
-
+    template_for_nutrient =Template('$nutrient from $lower to $upper ')
+    NO_INFORMATION = "I have't see any information related with crops in your query"
     instance = None
 
     @classmethod
@@ -82,61 +87,55 @@ class ChatBot(object):
         return nutrient
 
     def generate_template(self , intent , result):
-        try:
-            response = ""
-            print("Intent :",intent)
-            msgs = self.response_msg.get(intent) 
-            choice_msg = random.choice(msgs)
+        
+        response = self.NO_INFORMATION
+        msgs = self.response_msg.get(intent) 
+        choice_msg = random.choice(msgs)
             
-            if result: 
-                t = Template('Nutrient level for $crop_name is $nutrient from $lower to $upper ')
-                list_of_entities_template = []
-                for crop in result:
-                    for r in crop['result']:
-                        items = list(r.values())
 
-                        print("items :",items)
+        if intent == "greet" :
+                return choice_msg 
+            
+        if intent == "goodbye" :
+                return choice_msg
+            
+        if intent == "bot_challenge" :
+                return choice_msg
+            
 
-                        nutrient = items[0]['entity']
-                        lower , upper = items[0]['value']
+        if result[0].get("invalid"):
+            crop_name = result[0].get("crop_name")
+            return f"Sorry , There is no avalable {crop_name} information "
 
+        elif result:
+            list_of_entities_template = []
+            for crop in result:
+                 for r in crop['result']:
+                     items = list(r.values())
+                     nutrient = items[0]['entity']
+                     lower , upper = items[0]['value']
+                     new = self.template_for_nutrient.substitute( nutrient=nutrient, lower=lower , upper = upper)
+                     list_of_entities_template.append(new)
 
-                        new = t.substitute(crop_name =crop['crop'], nutrient=nutrient, lower=lower , upper = upper)
-                        list_of_entities_template.append(new)
+            suggest =  random.choice(self.response_msg.get("Suggestion") )
 
-                    # Nitrogen Nutreint sufficent level for Corn is from to is recommended
-                    # Nutrient level for corn is Nitrogen from 0 to 1 , .....
-                    # N
-            response = f'\n'.join(list_of_entities_template)
+            name = result[0]["crop"]
 
-        except:
-            print(traceback.format_exc())
-
-        response = response + choice_msg
+            response =suggest+ f",The nutrient level for {name} \n"+ f',\n'.join(list_of_entities_template)
 
         return response
                     
 
 
     def response(self , sentence):
-        responce = {'text' : " i dont know the answer"}
-
         data = self.extractEntityIntent(text= sentence)
-        
-        print("sentence :",data)
         intent = data.get("intent").get('name')
         entities = data.get("entities")
         ERROR_THRESHOLD = 0.25
         
-        list_of_entity = { element['value'] for element in entities if element['entity'] == "element" }
-
+        list_of_entity = { element['value'].capitalize() for element in entities if element['entity'] == "element" }
         list_of_crop ={crop['value'] for crop in entities if crop['entity'] == "crop" }
-
-        print("list_of_entity :",list_of_entity)
-        print("list_of_crop :",list_of_crop)
-
         result = self.askDBbyName(list_of_crop,list_of_entity)
-
         respond  = self.generate_template(intent , result )
-
+    
         return respond 
