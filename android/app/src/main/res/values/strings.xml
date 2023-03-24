@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AgriBot</string>
+    <string name="what_s_on_your_mind">Whats on your mind</string>
+    <string name="menu_refresh">refresh</string>
+    <string name="action_settings">AgriBot</string>
+    <string name="text">AgriBot</string>
+</resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginRight="100dp"
+    android:orientation="horizontal"
+    android:elevation="100dp"
+    >
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/bot"
+
+         />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="10dp">
+        <com.agrawalsuneet.dotsloader.loaders.LazyLoader
+            android:id="@+id/dotsTVBot"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1mm"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            app:lazyloader_animDur="300"
+
+            app:lazyloader_dotsDist="10px"
+            app:lazyloader_dotsRadius="3dp"
+            app:lazyloader_firstDelayDur="150"
+            app:lazyloader_firstDotColor="@color/bg_bubble_self"
+            app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
+            app:lazyloader_secondDelayDur="300"
+            app:lazyloader_secondDotColor="@color/bg_bubble_self"
+            app:lazyloader_thirdDotColor="@color/bg_bubble_self" />
+
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:autoLink="web"
+            android:background="@drawable/bg_bubble_watbot"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:elevation="10dp"
+            android:textSize="12sp" />
+        </FrameLayout>
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+</LinearLayout>
