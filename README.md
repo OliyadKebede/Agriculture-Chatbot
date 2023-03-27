@@ -153,7 +153,7 @@ A short snippet describing the license (MIT, Apache etc).
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
 
-MIT © Yourname
+MIT © Oliyadkkebede
 
 
 
